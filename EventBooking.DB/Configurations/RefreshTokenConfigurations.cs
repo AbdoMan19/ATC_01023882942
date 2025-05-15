@@ -1,8 +1,9 @@
+using EventBooking.DB.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SnapNFix.Domain.Entities;
 
-namespace SnapNFix.Infrastructure.Configurations;
+
+namespace EventBooking.DB.Configurations;
 
 public class RefreshTokenConfigurations : IEntityTypeConfiguration<RefreshToken>
 {

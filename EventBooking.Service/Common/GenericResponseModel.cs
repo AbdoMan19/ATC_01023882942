@@ -1,6 +1,6 @@
-using OnCareEmergencyCard.Service.Utilities;
+using EventBooking.Service.Utilities;
 
-namespace OnCareEmergencyCard.Service;
+namespace EventBooking.Service.Common;
 
 public class GenericResponseModel<TResult> : BaseResponseModel
 {

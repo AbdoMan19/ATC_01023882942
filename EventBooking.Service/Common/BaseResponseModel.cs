@@ -1,4 +1,4 @@
-namespace OnCareEmergencyCard.Service;
+namespace EventBooking.Service.Common;
 
 public class BaseResponseModel
 {
