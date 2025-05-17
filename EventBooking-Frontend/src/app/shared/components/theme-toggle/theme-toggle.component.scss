@@ -1,0 +1,25 @@
+@use 'sass:map';
+@use '../../../styles/variables' as *;
+@use '../../../styles/themes' as *;
+@use '../../../styles/mixins' as *;
+
+.theme-toggle {
+  @include button-base;
+  width: 40px;
+  height: 40px;
+  background-color: var(--color-gradient);
+  color: var(--white);
+  border-radius: map.get($border-radius, 'full');
+  border-color: var(--text-primary);
+  border: 0;
+  @include theme-transition;
+  
+  &:hover {
+    // background-color: var(--background-elevated);
+    color: var(--text-primary);
+  }
+  
+  i {
+    font-size: map.get($font-sizes, 'lg');
+  }
+} 

@@ -1,0 +1,80 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2>{{ isLoginMode ? 'Login' : 'Register' }}</h2>
+    
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group" *ngIf="!isLoginMode">
+        <label for="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          [class.is-invalid]="authForm.get('name')?.invalid && authForm.get('name')?.touched"
+        >
+        <div class="error-message" *ngIf="authForm.get('name')?.invalid && authForm.get('name')?.touched">
+          {{ getErrorMessage('name') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          [class.is-invalid]="authForm.get('email')?.invalid && authForm.get('email')?.touched"
+        >
+        <div class="error-message" *ngIf="authForm.get('email')?.invalid && authForm.get('email')?.touched">
+          {{ getErrorMessage('email') }}
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          [class.is-invalid]="authForm.get('password')?.invalid && authForm.get('password')?.touched"
+        >
+        <div class="error-message" *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched">
+          {{ getErrorMessage('password') }}
+        </div>
+      </div>
+
+      <div class="form-group" *ngIf="!isLoginMode">
+        <label for="confirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          [class.is-invalid]="authForm.get('confirmPassword')?.invalid && authForm.get('confirmPassword')?.touched"
+        >
+        <div class="error-message" *ngIf="authForm.get('confirmPassword')?.invalid && authForm.get('confirmPassword')?.touched">
+          {{ getErrorMessage('confirmPassword') }}
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="authForm.invalid || loading"
+        class="submit-button"
+      >
+        {{ loading ? 'Please wait...' : (isLoginMode ? 'Login' : 'Register') }}
+      </button>
+    </form>
+
+    <div class="toggle-mode">
+      <p>
+        {{ isLoginMode ? "Don't have an account?" : "Already have an account?" }}
+        <a (click)="toggleMode()" class="toggle-link">
+          {{ isLoginMode ? 'Register' : 'Login' }}
+        </a>
+      </p>
+    </div>
+  </div>
+</div> 

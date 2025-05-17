@@ -1,0 +1,125 @@
+.admin-dashboard {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  h1 {
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+
+    .stat-card {
+      background: var(--color-gradient);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      h3 {
+        color: var(--text-primary);
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-value {
+        color: var(--on-background-color);
+        font-size: 2rem;
+        font-weight: 600;
+        margin: 0;
+      }
+    }
+  }
+
+  .dashboard-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+
+    section {
+      background: var(--color-gradient);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+      h2 {
+        color : var(--text-primary);
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #eee;
+      }
+    }
+
+    .bookings-list, .events-list {
+      display: grid;
+      gap: 1rem;
+      max-height: 400px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 3px;
+      }
+    }
+
+    .booking-card, .event-card {
+      background: var(--filter-background);
+      padding: 1rem;
+      border-radius: 6px;
+      border-left: 4px solid #3498db;
+
+      h3 {
+        color: var(--on-background-color);
+        font-size: 1.1rem;
+        margin: 0 0 0.5rem 0;
+      }
+
+      p {
+        color: #666;
+        margin: 0.25rem 0;
+        font-size: 0.9rem;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    .event-card {
+      border-left-color: #2ecc71;
+    }
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1rem;
+
+    .dashboard-sections {
+      grid-template-columns: 1fr;
+    }
+  }
+} 

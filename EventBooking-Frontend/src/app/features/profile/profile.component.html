@@ -1,0 +1,68 @@
+<div class="profile-container">
+  <div class="profile-header">
+    <h1>My Profile</h1>
+    <button *ngIf="!isEditMode" (click)="toggleEditMode()" class="edit-button">
+      <i class="fas fa-edit"></i> Edit Profile
+    </button>
+  </div>
+
+  <div class="profile-content">
+    <div class="profile-card">
+      <div class="profile-avatar">
+        <div class="avatar-circle">
+          <span class="avatar-initials">{{ currentUser?.name?.charAt(0) || 'U' }}</span>
+        </div>
+      </div>
+
+      <div *ngIf="updateSuccess" class="success-message">
+        Profile updated successfully!
+      </div>
+      
+      <div *ngIf="updateError" class="error-message">
+        {{ updateError }}
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="submitForm()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" formControlName="name" class="form-control">
+          <div *ngIf="profileForm.get('name')?.invalid && profileForm.get('name')?.touched" class="error-text">
+            Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" class="form-control">
+          <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="error-text">
+            Please enter a valid email
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone (optional)</label>
+          <input type="tel" id="phone" formControlName="phone" class="form-control">
+        </div>
+
+        <div class="form-actions" *ngIf="isEditMode">
+          <button type="button" (click)="toggleEditMode()" class="cancel-button">Cancel</button>
+          <button type="submit" [disabled]="profileForm.invalid" class="save-button">Save Changes</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="profile-stats">
+      <div class="stats-card">
+        <h3>Account Information</h3>
+        <div class="stats-item">
+          <span class="stats-label">Role</span>
+          <span class="stats-value">{{ currentUser?.role || 'User' }}</span>
+        </div>
+        <div class="stats-item">
+          <span class="stats-label">Member Since</span>
+          <span class="stats-value">{{ currentUser?.createdAt ? (currentUser?.createdAt | date: 'mediumDate') : 'N/A' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

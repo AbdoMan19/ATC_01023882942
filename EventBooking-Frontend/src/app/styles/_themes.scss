@@ -1,0 +1,327 @@
+@use 'sass:map';
+@use 'sass:color';
+@use './variables' as *;
+
+// Base Color Variables
+$colors: (
+  // Brand Colors
+  primary: #0770d3,
+  primary-dark: rgb(31, 61, 145),
+  primary-light: #60a5fa,
+  secondary: #0056b3,
+  secondary-dark: #4338ca,
+  secondary-light: #818cf8,
+  
+  // Semantic Colors
+  success: #10b981,
+  warning: #f59e0b,
+  error: #e74c3c,
+  info: #3b82f6,
+  hover-color: #f0f0f0,
+  
+  // Text Colors
+  text-primary: #0189fd,
+  text-secondary: white,
+  text-light: #0189fd,
+  
+  // Border Colors
+  border-color: #ddd,
+  
+  // Background Colors
+  bg-light: #ffffff,
+  bg-dark: #14171a
+);
+
+// Pre-calculate scaled colors
+$scaled-colors: (
+  primary-hover: color.scale(map.get($colors, 'primary'), $lightness: -10%),
+  primary-active: color.scale(map.get($colors, 'primary'), $lightness: -15%),
+  secondary-hover: color.scale(map.get($colors, 'secondary'), $lightness: -10%),
+  secondary-active: color.scale(map.get($colors, 'secondary'), $lightness: -15%),
+  success-hover: color.scale(map.get($colors, 'success'), $lightness: -10%),
+  warning-hover: color.scale(map.get($colors, 'warning'), $lightness: -10%),
+  error-hover: color.scale(map.get($colors, 'error'), $lightness: -10%),
+  info-hover: color.scale(map.get($colors, 'info'), $lightness: -10%)
+);
+
+// Theme Definitions
+$themes: (
+  light: (
+    // Brand Colors
+    primary: map.get($colors, 'primary'),
+    primary-dark: map.get($colors, 'primary-dark'),
+    primary-light: map.get($colors, 'primary-light'),
+    primary-hover: map.get($scaled-colors, 'primary-hover'),
+    primary-active: map.get($scaled-colors, 'primary-active'),
+    secondary: map.get($colors, 'secondary'),
+    secondary-dark: map.get($colors, 'secondary-dark'),
+    secondary-light: map.get($colors, 'secondary-light'),
+    secondary-hover: map.get($scaled-colors, 'secondary-hover'),
+    secondary-active: map.get($scaled-colors, 'secondary-active'),
+    container-color: #2c3e50,
+    color-gradient: white,
+    third-hover: #0770d3,
+    login-bg: #e2e8f0,
+
+    
+    // Semantic Colors
+    success: map.get($colors, 'success'),
+    success-hover: map.get($scaled-colors, 'success-hover'),
+    warning: map.get($colors, 'warning'),
+    warning-hover: map.get($scaled-colors, 'warning-hover'),
+    error: map.get($colors, 'error'),
+    error-hover: map.get($scaled-colors, 'error-hover'),
+    info: map.get($colors, 'info'),
+    info-hover: map.get($scaled-colors, 'info-hover'),
+    
+    // Neutral Colors
+    neutral-50: #f8fafc,
+    neutral-100: #f1f5f9,
+    neutral-200: #e2e8f0,
+    neutral-300: #cbd5e1,
+    neutral-400: #94a3b8,
+    neutral-500: #64748b,
+    neutral-600: #475569,
+    neutral-700: #334155,
+    neutral-800: #1e293b,
+    neutral-900: #0f172a,
+    
+    // Text Colors
+    text-primary: map.get($colors, 'text-primary'),
+    text-secondary: map.get($colors, 'text-secondary'),
+    text-tertiary: var(--neutral-500),
+    text-disabled: var(--neutral-400),
+    
+    // Background Colors
+    background-primary: map.get($colors, 'bg-light'),
+    background-secondary: white,
+    background-tertiary: var(--neutral-100),
+    background-elevated: white,
+    on-background-color: map.get($colors, 'bg-dark'),
+    filter-background: var(--neutral-100),
+    
+    // Border Colors
+    border-color: map.get($colors, 'border-color'),
+    border-color-hover: var(--neutral-300),
+    
+    // Shadow Colors
+    shadow-color: rgba(0, 0, 0, 0.1),
+    shadow-color-hover: rgba(0, 0, 0, 0.15),
+    
+    // Overlay Colors
+    overlay-light: rgba(255, 255, 255, 0.1),
+    overlay-dark: rgba(0, 0, 0, 0.1),
+    
+    // Focus Colors
+    focus-ring: color.adjust(map.get($colors, 'primary'), $alpha: -0.7),
+    
+    // Component Colors
+    input-background: white,
+    input-border: var(--neutral-200),
+    input-border-hover: var(--neutral-300),
+    input-border-focus: var(--primary),
+    
+    button-primary: var(--primary),
+    button-primary-hover: var(--primary-hover),
+    button-secondary: var(--neutral-200),
+    button-secondary-hover: var(--neutral-300),
+    
+    card-background: white,
+    card-border: var(--neutral-200),
+    
+    modal-background: white,
+    modal-backdrop: rgba(0, 0, 0, 0.5),
+    
+    tooltip-background: var(--neutral-800),
+    tooltip-text: white,
+    
+    // Status Colors
+    status-success: var(--success),
+    status-warning: var(--warning),
+    status-error: var(--error),
+    status-info: var(--info),
+  ),
+  
+  dark: (
+    // Brand Colors
+    primary: #03060e,
+    primary-dark: #030b13,
+    primary-light: #60a5fa,
+    primary-hover: #3b82f6,
+    primary-active: color.scale(#3b82f6, $lightness: -15%),
+    secondary: #6366f1,
+    secondary-dark: #4f46e5,
+    secondary-light: #818cf8,
+    secondary-hover: #0056b3,
+    secondary-active: color.scale(#6366f1, $lightness: -15%),
+    container-color: #2c3e50,
+    color-gradient: linear-gradient(135deg,var(--primary),var(--container-color)),
+    login-bg: linear-gradient(135deg,var(--primary),var(--container-color)),
+
+
+    // Semantic Colors
+    success: map.get($colors, 'success'),
+    success-hover: map.get($scaled-colors, 'success-hover'),
+    warning: map.get($colors, 'warning'),
+    warning-hover: map.get($scaled-colors, 'warning-hover'),
+    error: map.get($colors, 'error'),
+    error-hover: map.get($scaled-colors, 'error-hover'),
+    info: map.get($colors, 'info'),
+    info-hover: map.get($scaled-colors, 'info-hover'),
+    
+    // Neutral Colors
+    neutral-50: #0f172a,
+    neutral-100: #1e293b,
+    neutral-200: #334155,
+    neutral-300: #475569,
+    neutral-400: #64748b,
+    neutral-500: #94a3b8,
+    neutral-600: #cbd5e1,
+    neutral-700: #e2e8f0,
+    neutral-800: #f1f5f9,
+    neutral-900: #f8fafc,
+    
+    // Text Colors
+    text-primary: map.get($colors, 'text-light'),
+    text-secondary: map.get($colors, 'text-light'),
+    text-tertiary: var(--neutral-400),
+    text-disabled: var(--neutral-500),
+    
+    // Background Colors
+    background-primary: map.get($colors, 'bg-dark'),
+    background-secondary: var(--neutral-100),
+    background-tertiary: var(--neutral-700),
+    background-elevated: var(--neutral-800),
+    on-background-color: map.get($colors, 'bg-light'),
+    filter-background: var(--neutral-100),
+    // Border Colors
+    border-color: var(--neutral-700),
+    border-color-hover: var(--neutral-600),
+    
+    // Shadow Colors
+    shadow-color: rgba(0, 0, 0, 0.3),
+    shadow-color-hover: rgba(0, 0, 0, 0.4),
+    
+    // Overlay Colors
+    overlay-light: rgba(255, 255, 255, 0.05),
+    overlay-dark: rgba(0, 0, 0, 0.2),
+    
+    // Focus Colors
+    focus-ring: color.adjust(#3b82f6, $alpha: -0.7),
+    
+    // Component Colors
+    input-background: var(--neutral-800),
+    input-border: var(--neutral-700),
+    input-border-hover: var(--neutral-600),
+    input-border-focus: var(--primary),
+    
+    button-primary: var(--primary),
+    button-primary-hover: var(--primary-hover),
+    button-secondary: var(--neutral-700),
+    button-secondary-hover: var(--neutral-600),
+    
+    card-background: var(--neutral-800),
+    card-border: var(--neutral-700),
+    
+    modal-background: var(--neutral-800),
+    modal-backdrop: rgba(0, 0, 0, 0.7),
+    
+    tooltip-background: var(--neutral-200),
+    tooltip-text: var(--neutral-900),
+    
+    // Status Colors
+    status-success: var(--success),
+    status-warning: var(--warning),
+    status-error: var(--error),
+    status-info: var(--info),
+  )
+);
+
+// CSS Custom Properties
+:root {
+  @each $theme, $colors in $themes {
+    &[data-theme="#{$theme}"] {
+      @each $key, $value in $colors {
+        --#{$key}: #{$value};
+      }
+    }
+  }
+}
+
+// Theme Mixins
+@mixin theme-aware($property, $light-value, $dark-value) {
+  #{$property}: $light-value;
+  
+  [data-theme="dark"] & {
+    #{$property}: $dark-value;
+  }
+}
+
+@mixin theme-transition {
+  transition: background-color map.get($transitions, 'base'),
+              border-color map.get($transitions, 'base'),
+              color map.get($transitions, 'base'),
+              box-shadow map.get($transitions, 'base');
+}
+
+// Utility Classes
+.theme-transition {
+  @include theme-transition;
+}
+
+// Component Mixins
+@mixin card-base {
+  background-color: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: $border-radius;
+  box-shadow: map.get($shadows, 'base');
+  @include theme-transition;
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: map.get($spacing, 'sm') map.get($spacing, 'md');
+  font-weight: map.get($font-weights, 'medium');
+  @include theme-transition;
+  
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+@mixin input-base {
+  width: 100%;
+  padding: map.get($spacing, 'sm') map.get($spacing, 'md');
+  background-color: var(--input-background);
+  border: 1px solid var(--input-border);
+  border-radius: map.get($border-radius, 'md');
+  color: var(--text-primary);
+  @include theme-transition;
+  
+  &:hover {
+    border-color: var(--input-border-hover);
+  }
+  
+  &:focus {
+    outline: none;
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+  
+  &::placeholder {
+    color: var(--text-tertiary);
+  }
+  
+  &.error {
+    border-color: var(--status-error);
+    background-color: rgba(map.get($colors, 'error'), 0.05);
+  }
+}
+
+body {
+  background: var(--background-primary);
+  color: var(--text-primary);
+}

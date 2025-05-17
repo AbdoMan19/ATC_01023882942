@@ -1,0 +1,46 @@
+<div class="bookings-container">
+  <h1>My Bookings</h1>
+
+  <div class="bookings-list" *ngIf="bookings.length > 0">
+    <div *ngFor="let booking of bookings" class="booking-card">
+      <div class="booking-header">
+        <h2>{{ booking.eventName }}</h2>
+        <span class="booking-status" [class]="booking.status.toLowerCase()">
+          {{ booking.status }}
+        </span>
+      </div>
+
+      <div class="booking-details">
+        <p class="booking-date">
+          <strong>Date:</strong> {{ booking.eventDate | date:'medium' }}
+        </p>
+        <p class="booking-price">
+          <strong>Price:</strong> ${{ booking.totalPrice }}
+        </p>
+      </div>
+
+      <div class="booking-actions">
+        <button
+          class="btn btn-danger"
+          (click)="cancelBooking(booking.id)"
+          [disabled]="booking.status === BookingStatus.CANCELLED || loading"
+        >
+          Cancel Booking
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-bookings" *ngIf="bookings.length === 0 && !loading">
+    <p>You haven't made any bookings yet.</p>
+    <a routerLink="/events" class="btn btn-primary">Browse Events</a>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    Loading your bookings...
+  </div>
+
+  <div class="error" *ngIf="error">
+    {{ error }}
+  </div>
+</div> 

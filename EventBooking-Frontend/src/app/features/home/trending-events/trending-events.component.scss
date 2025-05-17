@@ -1,0 +1,157 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/themes' as *;
+@use '../../../styles/mixins' as *;
+
+.trending-events {
+  padding: 4rem 0;
+  background-color: var(--color-gradient);
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--text-primary);
+      font-size: 2rem;
+    }
+  }
+
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.event-card {
+  background: var(--color-gradient);
+  border-radius: $border-radius-sm;
+  overflow: hidden;
+  box-shadow: $shadow-sm;
+  @include theme-transition;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: $shadow-md;
+  }
+}
+
+.event-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.event-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--primary);
+  color: var(--text-light);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.event-content {
+  padding: 1.5rem;
+
+  h3 {
+    margin: 0 0 1rem;
+    max-lines: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 266px;
+    font-size: 1.25rem;
+    color: var(--on-background-color);
+  }
+
+  p {
+    margin: 0.5rem 0;
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+
+    i {
+      margin-right: 0.5rem;
+      color: var(--text-primary);
+    }
+  }
+}
+
+.event-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.view-event-button,
+.book-event-button {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: $border-radius-sm;
+  font-weight: 600;
+  cursor: pointer;
+  @include theme-transition;
+}
+
+.view-event-button {
+  background-color: var(--background-tertiary);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+
+  &:hover {
+    background-color: var(--primary-hover);
+    color: white
+  }
+}
+
+.book-event-button {
+  background-color: var(--primary);
+  color: var(--text-secondary);
+
+  &:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+    color: var(--border-color);
+  }
+
+  &:disabled {
+    background-color: var(--text-tertiary);
+    cursor: not-allowed;
+    opacity: 0.8;
+  }
+
+  &.booked {
+    background-color: var(--success);
+    color: white
+  }
+}
+
+@media (max-width: 768px) {
+  .trending-events {
+    .events-grid {
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .trending-events {
+    .events-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+} 

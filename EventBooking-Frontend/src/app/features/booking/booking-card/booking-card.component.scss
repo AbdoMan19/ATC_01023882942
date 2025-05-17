@@ -1,0 +1,219 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/themes' as *;
+@use '../../../styles/mixins' as *;
+
+.booking-card {
+  background: var(--background-elevated);
+  border-radius: $border-radius;
+  overflow: hidden;
+  box-shadow: $shadow-sm;
+  @include theme-transition;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-md;
+  }
+}
+
+.booking-header {
+  padding: 1rem;
+  background-color: $background-color;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $border-color;
+}
+
+.booking-id {
+  font-weight: 500;
+  color: $text-color;
+}
+
+.booking-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  &.status-confirmed {
+    background-color: rgba($success-color, 0.1);
+    color: $success-color;
+  }
+
+  &.status-pending {
+    background-color: rgba($warning-color, 0.1);
+    color: $warning-color;
+  }
+
+  &.status-cancelled {
+    background-color: rgba($error-color, 0.1);
+    color: $error-color;
+  }
+}
+
+.event-info {
+  padding: 1rem;
+}
+
+.event-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .event-date {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--primary);
+    color: var(--text-light);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+
+  .booking-status {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    &.confirmed {
+      background: var(--success);
+      color: var(--text-light);
+    }
+
+    &.pending {
+      background: var(--warning);
+      color: var(--text-light);
+    }
+
+    &.cancelled {
+      background: var(--error);
+      color: var(--text-light);
+    }
+  }
+}
+
+.booking-content {
+  padding: 1.5rem;
+
+  .event-title {
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    margin: 0 0 1rem;
+  }
+
+  .booking-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1.5rem;
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: var(--text-tertiary);
+
+      i {
+        color: var(--primary);
+        font-size: 1.1rem;
+      }
+
+      .label {
+        font-weight: 500;
+        color: var(--text-primary);
+      }
+    }
+  }
+
+  .booking-actions {
+    display: flex;
+    gap: 1rem;
+
+    button {
+      flex: 1;
+      padding: 0.75rem;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      font-weight: 500;
+      @include theme-transition;
+
+      &.view-event {
+        background: var(--primary);
+        color: var(--text-light);
+
+        &:hover {
+          background: var(--primary-hover);
+        }
+      }
+
+      &.cancel-booking {
+        background: var(--background-tertiary);
+        color: var(--error);
+        border: 1px solid var(--error);
+
+        &:hover {
+          background: var(--error);
+          color: var(--text-light);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          background: var(--background-tertiary);
+          color: var(--text-tertiary);
+          border-color: var(--text-tertiary);
+
+          &:hover {
+            background: var(--background-tertiary);
+            color: var(--text-tertiary);
+          }
+        }
+      }
+    }
+  }
+}
+
+.booking-meta {
+  padding: 1rem 1.5rem;
+  background: var(--background-tertiary);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .booking-id {
+    color: var(--text-tertiary);
+    font-size: 0.9rem;
+  }
+
+  .booking-price {
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .booking-card {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .booking-content {
+    .booking-actions {
+      flex-direction: column;
+    }
+  }
+} 

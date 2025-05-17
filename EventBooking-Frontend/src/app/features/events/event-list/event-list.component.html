@@ -1,0 +1,228 @@
+<div class="events-container">
+  <div class="search-hero">
+    <div class="search-content">
+      <h1>Discover Amazing Events</h1>
+      <p>Find and book tickets for the best events in your area</p>
+      <div class="search-box">
+        <div class="search-input-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input 
+            type="text" 
+            placeholder="Search events by name, location, or organizer..." 
+            (input)="onSearch($event)"
+            [value]="searchQuery"
+            class="search-input"
+          >
+          <button class="filter-toggle" (click)="toggleFilters()">
+            <i class="fas fa-sliders-h"></i>
+            Filters
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filters-panel" [class.show]="showFilters">
+    <div class="filters-header">
+      <h3>Filter Events</h3>
+      <button class="reset-filters" (click)="resetFilters()">
+        <i class="fas fa-undo"></i>
+        Reset Filters
+      </button>
+    </div>
+
+    <div class="filters-content">
+      <div class="filter-section">
+        <h4>Categories</h4>
+        <div class="category-filters">
+          <button 
+            class="filter-button" 
+            [class.active]="filterOptions.category === 'ALL'"
+            (click)="updateFilters({ category: 'ALL' })"
+          >
+            <i class="fas fa-th-large"></i>
+            All Events
+          </button>
+          <button 
+            *ngFor="let category of EventCategory | keyvalue"
+            class="filter-button" 
+            [class.active]="filterOptions.category === category.value"
+            (click)="updateFilters({ category: category.value })"
+          >
+            <i [class]="'fas ' + getCategoryIcon(category.value)"></i>
+            {{category.value}}
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <h4>Price Range</h4>
+        <div class="price-range">
+          <input 
+            type="range" 
+            [min]="0" 
+            [max]="1000" 
+            [value]="filterOptions.priceRange.min"
+            (input)="updatePriceRange('min', $event)"
+          >
+          <div class="price-inputs">
+            <input 
+              type="number" 
+              [value]="filterOptions.priceRange.min"
+              (input)="updatePriceRange('min', $event)"
+              placeholder="Min"
+            >
+            <span>to</span>
+            <input 
+              type="number" 
+              [value]="filterOptions.priceRange.max"
+              (input)="updatePriceRange('max', $event)"
+              placeholder="Max"
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <h4>Availability</h4>
+        <div class="availability-filters">
+          <button 
+            class="filter-button" 
+            [class.active]="filterOptions.availability === 'all'"
+            (click)="updateFilters({ availability: 'all' })"
+          >
+            <i class="fas fa-infinity"></i>
+            All
+          </button>
+          <button 
+            class="filter-button" 
+            [class.active]="filterOptions.availability === 'available'"
+            (click)="updateFilters({ availability: 'available' })"
+          >
+            <i class="fas fa-ticket-alt"></i>
+            Available
+          </button>
+          <button 
+            class="filter-button" 
+            [class.active]="filterOptions.availability === 'almost-full'"
+            (click)="updateFilters({ availability: 'almost-full' })"
+          >
+            <i class="fas fa-exclamation-circle"></i>
+            Almost Full
+          </button>
+        </div>
+      </div>
+
+      <div class="filter-section">
+        <h4>Sort By</h4>
+        <div class="sort-filters">
+          <button 
+            class="filter-button" 
+            [class.active]="filterOptions.sortBy === 'date'"
+            (click)="updateFilters({ sortBy: 'date' })"
+          >
+            <i class="fas fa-calendar"></i>
+            Date
+          </button>
+          <button 
+            class="filter-button" 
+            [class.active]="filterOptions.sortBy === 'price'"
+            (click)="updateFilters({ sortBy: 'price' })"
+          >
+            <i class="fas fa-euro-sign"></i>
+            Price
+          </button>
+          <button 
+            class="filter-button" 
+            [class.active]="filterOptions.sortBy === 'name'"
+            (click)="updateFilters({ sortBy: 'name' })"
+          >
+            <i class="fas fa-font"></i>
+            Name
+          </button>
+          <button 
+            class="sort-order-button"
+            (click)="updateFilters({ sortOrder: filterOptions.sortOrder === 'asc' ? 'desc' : 'asc' })"
+          >
+            <i class="fas" [class.fa-sort-up]="filterOptions.sortOrder === 'asc'" [class.fa-sort-down]="filterOptions.sortOrder === 'desc'"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{error}}
+  </div>
+
+  <div class="events-grid" *ngIf="!isLoading && !error">
+    <div *ngFor="let event of filteredEvents" class="event-card">
+      <div class="event-image">
+        <img [src]="event.imageUrl" [alt]="event.title">
+        <div class="category-badge">
+          <i [class]="'fas ' + getCategoryIcon(event.category)"></i>
+          {{event.category}}
+        </div>
+      </div>
+      <div class="event-content">
+        <h3 class="event-title">{{event.title}}</h3>
+        <div class="event-meta">
+          <div class="meta-item">
+            <i class="fas fa-calendar"></i>
+            <span>{{event.startDate | date:'mediumDate'}}</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>{{event.location}}</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-clock"></i>
+            <span>{{event.duration}} hours</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-users"></i>
+            <span>{{event.availableSeats}} seats left</span>
+          </div>
+        </div>
+        <p class="event-description">{{event.description}}</p>
+        <div class="event-footer">
+          <div class="event-price">{{event.price}}</div>
+          <a [routerLink]="['/events', event.id]" class="view-event-button">
+            View Details
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button 
+      class="pagination-btn" 
+      [disabled]="currentPage === 1"
+      (click)="onPageChange(currentPage - 1)">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    
+    <div class="page-numbers">
+      <button 
+        *ngFor="let page of [].constructor(totalPages); let i = index"
+        class="page-number"
+        [class.active]="currentPage === i + 1"
+        (click)="onPageChange(i + 1)">
+        <span>{{i + 1}}</span>
+      </button>
+    </div>
+
+    <button 
+      class="pagination-btn" 
+      [disabled]="currentPage === totalPages"
+      (click)="onPageChange(currentPage + 1)">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div> 

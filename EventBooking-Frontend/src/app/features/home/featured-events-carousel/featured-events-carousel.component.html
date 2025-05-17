@@ -1,0 +1,37 @@
+<section class="featured-carousel">
+  <div class="container">
+    <h2>Featured Events</h2>
+    <div class="carousel-container">
+      <div class="carousel-track" [style.transform]="'translateX(' + currentPosition + 'px)'">
+        <div class="carousel-item" *ngFor="let event of featuredEvents">
+          <div class="event-card">
+            <div class="event-image">
+              <img [src]="event.imageUrl" [alt]="event.title">
+            </div>
+            <div class="event-content">
+              <h3 class="event-title">{{ event.title }}</h3>
+              <p><i class="fas fa-calendar"></i> {{ event.startDate | date:'mediumDate' }}</p>
+              <p><i class="fas fa-map-marker-alt"></i> {{ event.location }}</p>
+              <div class="event-actions">
+                <button class="view-event-button" (click)="onViewEvent(event.id)">View Event</button>
+                <button 
+                  class="book-event-button" 
+                  [class.booked]="isEventBooked(event.id)"
+                  [disabled]="isEventBooked(event.id)"
+                  (click)="onBookEvent(event.id)">
+                  {{ isEventBooked(event.id) ? 'Booked' : 'Book Now' }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-button prev" (click)="prevSlide()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="carousel-button next" (click)="nextSlide()">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</section> 

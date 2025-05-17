@@ -1,0 +1,96 @@
+<main class="home-page">
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Discover Unforgettable Events</h1>
+      <p>Find and book the best events in your area. From concerts to conferences, we've got you covered.</p>
+      <div class="hero-search">
+        <input 
+          type="text" 
+          placeholder="Search events..." 
+          class="search-input"
+          #searchInput
+          (keyup.enter)="onSearch(searchInput.value)">
+        <button class="search-button" (click)="onSearch(searchInput.value)">
+          <i class="fas fa-search"></i>
+          Search
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <app-featured-events-carousel></app-featured-events-carousel>
+  <app-statistics></app-statistics>
+
+  <!-- Upcoming Events Countdown -->
+  <app-big-events></app-big-events>
+
+  <app-trending-events></app-trending-events>
+
+  <!-- Categories Section -->
+  <section class="categories">
+    <div class="container">
+      <h2>Browse by Category</h2>
+      <div class="categories-grid">
+        <div class="category-card" *ngFor="let category of categories" (click)="onViewCategory(category.name)">
+          <i [class]="category.icon"></i>
+          <h3>{{category.name}}</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <div class="container">
+      <h2>How It Works</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Browse Events</h3>
+          <p>Explore our wide range of events and find what interests you.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Book Tickets</h3>
+          <p>Select your preferred seats and complete the booking process.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Enjoy the Event</h3>
+          <p>Receive your tickets and get ready for an amazing experience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="container">
+      <h2>What Our Users Say</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+          <div class="testimonial-content">
+            <p>{{testimonial.content}}</p>
+          </div>
+          <div class="testimonial-author">
+            <img [src]="testimonial.image" [alt]="testimonial.name">
+            <div class="author-info">
+              <h4>{{testimonial.name}}</h4>
+              <p>{{testimonial.role}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action Section -->
+  <section class="cta">
+    <div class="container">
+      <h2>Ready to Find Your Next Event?</h2>
+      <p>Join thousands of event-goers and start your journey today.</p>
+      <button class="cta-button" (click)="onGetStarted()">Get Started</button>
+    </div>
+  </section>
+</main> 

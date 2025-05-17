@@ -1,0 +1,93 @@
+<div class="management-container">
+  <div class="management-header">
+    <h1>Event Management</h1>
+    <button (click)="onCreateEvent()" class="create-button">
+      <i class="fas fa-plus"></i>
+      Create New Event
+    </button>
+  </div>
+
+  <div class="filters">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        placeholder="Search events..."
+        (input)="onSearch($event)"
+      >
+    </div>
+
+    <div class="category-filters">
+      <button
+        *ngFor="let category of categories"
+        [class.active]="(selectedCategory | async) === category"
+        (click)="onCategoryChange(category)"
+        class="filter-button"
+      >
+        {{ category }}
+      </button>
+      <button
+        [class.active]="(selectedCategory | async) === 'ALL'"
+        (click)="onCategoryChange('ALL')"
+        class="filter-button"
+      >
+        All Events
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="events-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Available Seats</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of events$ | async">
+          <td>
+            <div class="event-name">
+              <img [src]="event.imageUrl" [alt]="event.title">
+              <span>{{ event.title }}</span>
+            </div>
+          </td>
+          <td>{{ event.startDate | date:'mediumDate' }}</td>
+          <td>{{ event.category }}</td>
+          <td>${{ event.price }}</td>
+          <td>{{ event.availableSeats }}</td>
+          <td>
+            <div class="action-buttons">
+              <button
+                (click)="onEditEvent(event.id)"
+                class="edit-button"
+                title="Edit Event"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button
+                (click)="onDeleteEvent(event)"
+                class="delete-button"
+                title="Delete Event"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> 
