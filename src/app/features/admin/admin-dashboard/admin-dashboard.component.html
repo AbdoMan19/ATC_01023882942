@@ -1,0 +1,43 @@
+<div class="admin-dashboard">
+  <h1>Admin Dashboard</h1>
+
+  <div class="stats-grid" *ngIf="stats$ | async as stats">
+    <div class="stat-card">
+      <h3>Total Events</h3>
+      <p class="stat-value">{{ stats.totalEvents }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Total Bookings</h3>
+      <p class="stat-value">{{ stats.totalBookings }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Upcoming Events</h3>
+      <p class="stat-value">{{ stats.upcomingEvents }}</p>
+    </div>
+  </div>
+
+  <div class="dashboard-sections">
+    <section class="recent-bookings">
+      <h2>Recent Bookings</h2>
+      <div class="bookings-list" *ngIf="stats$ | async as stats">
+        <div class="booking-card" *ngFor="let booking of stats.recentBookings">
+          <h3>{{ booking.eventName }}</h3>
+          <p>Date: {{ booking.eventDate | date }}</p>
+          <p>Status: {{ booking.status }}</p>
+          <p>Created: {{ booking.createdAt | date }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="popular-events">
+      <h2>Popular Events</h2>
+      <div class="events-list" *ngIf="stats$ | async as stats">
+        <div class="event-card" *ngFor="let event of stats.popularEvents">
+          <h3>{{ event.title }}</h3>
+          <p>{{ event.startDate | date }}</p>
+          <p>{{ event.bookingCount }} bookings</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</div> 

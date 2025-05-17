@@ -1,0 +1,139 @@
+.settings-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+
+  h1 {
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    font-size: 2rem;
+  }
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.settings-card {
+  background-color: var(--filter-background);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.75rem;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--on-background-color);
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+    background-color: var(--login-bg);
+    color: var(--on-background-color);
+    font-size: 1rem;
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    }
+  }
+}
+
+.save-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.language-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.language-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #007bff;
+    background-color: #f8f9fa;
+  }
+
+  &.active {
+    border-color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .language-name {
+    font-weight: 500;
+    color: var(--on-background-color);
+  }
+
+  .language-check {
+    color: #007bff;
+  }
+} 

@@ -1,0 +1,200 @@
+.profile-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 2rem;
+  }
+}
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-card {
+  background-color: var(--filter-background);
+  border-radius: 10px;
+  //box-shadow: 0 4px 10px var(--border-color);
+  padding: 2rem;
+}
+
+.profile-avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  .avatar-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    //color: var(--on-background-color);
+  }
+
+  .form-control {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--on-background-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--on-background-color);
+    background-color: var(--background-primary);
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-hover);;
+      //box-shadow: 0 0 0 3px var(--primary);
+    }
+
+    &:disabled {
+      background-color: var(--filter-background);
+      cursor: not-allowed;
+    }
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.edit-button,
+.save-button,
+.cancel-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-button {
+  background-color: var(--primary-hover);
+  color: white;
+  border: none;
+
+  &:hover {
+    background-color: var(--secondary-hover);
+  }
+}
+
+.save-button {
+  background-color: var(--primary-hover);
+  color: white;
+  border: none;
+
+  &:hover {
+    background-color: var(--secondary-hover);
+  }
+
+  &:disabled {
+    background-color: var(--border-color);
+    cursor: not-allowed;
+  }
+}
+
+.cancel-button {
+  background-color: var(--filter-background);
+  color: var(--on-background-color);
+  border: 1px solid var(--border-color);
+
+  &:hover {
+    background-color: var(--filter-background);
+  }
+}
+
+.success-message {
+  background-color: var(--success);
+  color: var(--on-background-color);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.error-message {
+  background-color: var(--error);
+  color: var(--on-background-color);
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+}
+
+.error-text {
+  color: var(--error);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.profile-stats {
+  .stats-card {
+    background-color: var(--filter-background);
+    border-radius: 10px;
+    //box-shadow: 0 4px 10px var(--border-color);
+    padding: 1.5rem;
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      color: var(--on-background-color);
+      font-size: 1.25rem;
+    }
+  }
+
+  .stats-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+
+  .stats-label {
+    color: var(--on-background-color);
+    font-weight: 500;
+  }
+
+  .stats-value {
+    color: var(--on-background-color);
+    font-weight: 600;
+  }
+} 

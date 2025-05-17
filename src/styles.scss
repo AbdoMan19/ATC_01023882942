@@ -1,0 +1,37 @@
+@use 'app/styles/variables' as *;
+@use 'app/styles/themes' as *;
+@use 'app/styles/mixins' as *;
+
+// Snackbar styles
+.success-snackbar {
+  background-color: var(--success);
+  color: var(--text-light);
+  
+  .mat-simple-snackbar-action {
+    color: var(--text-light);
+  }
+}
+
+.error-snackbar {
+  background-color: var(--error);
+  color: var(--text-light);
+  
+  .mat-simple-snackbar-action {
+    color: var(--text-light);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  @include theme-transition;
+}

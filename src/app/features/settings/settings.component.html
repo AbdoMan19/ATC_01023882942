@@ -1,0 +1,75 @@
+<div class="settings-container">
+  <h1>Settings</h1>
+  
+  <div class="settings-content">
+    <!-- Password Change Section -->
+    <div class="settings-card" *ngIf="currentUser?.role !== UserRole.ADMIN">
+      <h2>Change Password</h2>
+      
+      <div *ngIf="passwordUpdateSuccess" class="success-message">
+        Password changed successfully!
+      </div>
+      
+      <div *ngIf="passwordUpdateError" class="error-message">
+        {{ passwordUpdateError }}
+      </div>
+      
+      <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+        <div class="form-group">
+          <label for="oldPassword">Current Password</label>
+          <input type="password" id="oldPassword" formControlName="oldPassword" class="form-control">
+          <div *ngIf="passwordForm.get('oldPassword')?.invalid && passwordForm.get('oldPassword')?.touched" class="error-text">
+            {{ getPasswordErrorMessage('oldPassword') }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="newPassword">New Password</label>
+          <input type="password" id="newPassword" formControlName="newPassword" class="form-control">
+          <div *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched" class="error-text">
+            {{ getPasswordErrorMessage('newPassword') }}
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword">Confirm New Password</label>
+          <input type="password" id="confirmPassword" formControlName="confirmPassword" class="form-control">
+          <div *ngIf="passwordForm.get('confirmPassword')?.invalid && passwordForm.get('confirmPassword')?.touched" class="error-text">
+            {{ getPasswordErrorMessage('confirmPassword') }}
+          </div>
+        </div>
+        
+        <button type="submit" [disabled]="!isPasswordFormValid()" class="save-button">
+          Change Password
+        </button>
+      </form>
+    </div>
+    
+    <!-- Language Preferences Section -->
+    <div class="settings-card">
+      <h2>Language Preferences</h2>
+      
+      <div *ngIf="updateSuccess" class="success-message">
+        Language preference updated successfully!
+      </div>
+      
+      <div *ngIf="updateError" class="error-message">
+        {{ updateError }}
+      </div>
+      
+      <div class="language-options">
+        <div 
+          *ngFor="let language of languages" 
+          class="language-option" 
+          [class.active]="languagePreference === language.code"
+          (click)="changeLanguage(language.code)"
+        >
+          <span class="language-name">{{ language.name }}</span>
+          <span class="language-check" *ngIf="languagePreference === language.code">
+            <i class="fas fa-check"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

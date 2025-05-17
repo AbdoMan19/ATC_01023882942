@@ -1,0 +1,28 @@
+<section class="trending-events">
+  <div class="container">
+    <h2>Trending Events</h2>
+    <div class="events-grid">
+      <div class="event-card" *ngFor="let event of trendingEvents">
+        <div class="event-image">
+          <img [src]="event.imageUrl" [alt]="event.title">
+          <div class="event-badge" *ngIf="event.category">{{ event.category }}</div>
+        </div>
+        <div class="event-content">
+          <h3>{{ event.title}}</h3>
+          <p class="event-date"><i class="fas fa-calendar"></i> {{ event.startDate | date:'mediumDate' }}</p>
+          <p class="event-location"><i class="fas fa-map-marker-alt"></i> {{ event.location }}</p>
+          <div class="event-actions">
+            <button class="view-event-button" (click)="onViewEvent(event.id)">View Event</button>
+            <button 
+              class="book-event-button" 
+              [class.booked]="isEventBooked(event.id)"
+              [disabled]="isEventBooked(event.id)"
+              (click)="onBookEvent(event.id)">
+              {{ isEventBooked(event.id) ? 'Booked' : 'Book Now' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> 

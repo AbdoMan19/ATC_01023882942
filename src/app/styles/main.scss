@@ -1,0 +1,139 @@
+@use 'sass:map';
+@use './variables' as *;
+@use './themes' as *;
+@use './mixins' as *;
+
+// Reset and Base Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  line-height: map.get($line-heights, 'normal');
+  color: var(--text-primary);
+  background-color: var(--background-primary);
+  @include theme-transition;
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: map.get($font-weights, 'bold');
+  line-height: map.get($line-heights, 'tight');
+  margin-bottom: map.get($spacing, 'md');
+}
+
+h1 { font-size: map.get($font-sizes, '4xl'); }
+h2 { font-size: map.get($font-sizes, '3xl'); }
+h3 { font-size: map.get($font-sizes, '2xl'); }
+h4 { font-size: map.get($font-sizes, 'xl'); }
+h5 { font-size: map.get($font-sizes, 'lg'); }
+h6 { font-size: map.get($font-sizes, 'base'); }
+
+p {
+  margin-bottom: map.get($spacing, 'md');
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  @include theme-transition;
+  
+  &:hover {
+    color: var(--primary-dark);
+  }
+}
+
+// Form Elements
+input,
+textarea,
+select,
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+// Utility Classes
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 map.get($spacing, 'md');
+  
+  @include respond-to('lg') {
+    padding: 0 map.get($spacing, 'lg');
+  }
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-1 { margin-top: map.get($spacing, 'xs'); }
+.mt-2 { margin-top: map.get($spacing, 'sm'); }
+.mt-3 { margin-top: map.get($spacing, 'md'); }
+.mt-4 { margin-top: map.get($spacing, 'lg'); }
+.mt-5 { margin-top: map.get($spacing, 'xl'); }
+
+.mb-1 { margin-bottom: map.get($spacing, 'xs'); }
+.mb-2 { margin-bottom: map.get($spacing, 'sm'); }
+.mb-3 { margin-bottom: map.get($spacing, 'md'); }
+.mb-4 { margin-bottom: map.get($spacing, 'lg'); }
+.mb-5 { margin-bottom: map.get($spacing, 'xl'); }
+
+.mx-auto { margin-left: auto; margin-right: auto; }
+
+// Accessibility
+.visually-hidden {
+  @include sr-only;
+}
+
+// Animations
+.fade-in {
+  @include fade-in;
+}
+
+.slide-in {
+  @include slide-in;
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-tertiary);
+  border-radius: map.get($border-radius, 'full');
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-400);
+  border-radius: map.get($border-radius, 'full');
+  
+  &:hover {
+    background: var(--neutral-500);
+  }
+} 

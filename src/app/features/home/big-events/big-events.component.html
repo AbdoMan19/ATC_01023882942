@@ -1,0 +1,45 @@
+<section class="big-events">
+  <div class="container">
+    <h2>Upcoming Big Events</h2>
+    <div class="events-grid">
+      <div class="event-card" *ngFor="let event of bigEvents">
+        <div class="event-image">
+          <img [src]="event.imageUrl" [alt]="event.title">
+          <div class="countdown">
+            <div class="countdown-item">
+              <span class="countdown-value">{{event.timeRemaining?.days}}</span>
+              <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-item">
+              <span class="countdown-value">{{event.timeRemaining?.hours}}</span>
+              <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-item">
+              <span class="countdown-value">{{event.timeRemaining?.minutes}}</span>
+              <span class="countdown-label">Minutes</span>
+            </div>
+            <div class="countdown-item">
+              <span class="countdown-value">{{event.timeRemaining?.seconds}}</span>
+              <span class="countdown-label">Seconds</span>
+            </div>
+          </div>
+        </div>
+        <div class="event-content">
+          <h3>{{event.title}}</h3>
+          <p><i class="fas fa-calendar"></i> {{event.startDate | date:'mediumDate'}}</p>
+          <p><i class="fas fa-map-marker-alt"></i> {{event.location}}</p>
+          <div class="event-actions">
+            <button class="view-event-button" (click)="onViewEvent(event.id)">View Event</button>
+            <button 
+              class="book-event-button" 
+              [class.booked]="isEventBooked(event.id)"
+              [disabled]="isEventBooked(event.id)"
+              (click)="onBookEvent(event.id)">
+              {{ isEventBooked(event.id) ? 'Booked' : 'Book Now' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

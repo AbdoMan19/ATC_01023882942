@@ -1,0 +1,211 @@
+<!-- Event Content -->
+<div class="event-detail" *ngIf="event$ | async as event">
+  <!-- Hero Section -->
+  <div class="hero" [style.background-image]="'url(' + event.imageUrl + ')'">
+    <div class="hero-content">
+      <h1>{{ event.title }}</h1>
+      <div class="event-meta">
+        <span class="date">
+          <i class="fas fa-calendar"></i>
+          {{ event.startDate | date:'mediumDate' }}
+        </span>
+        <span class="location">
+          <i class="fas fa-map-marker-alt"></i>
+          {{ event.location }}
+        </span>
+        <span class="category">
+          <i class="fas fa-tag"></i>
+          {{ event.category }}
+        </span>
+      </div>
+      <div class="countdown">
+        <i class="fas fa-clock"></i>
+        {{ timeRemaining }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <div class="sidebar">
+      <!-- Ticket Purchase Section -->
+      <div class="ticket-section">
+        <h3>Get Your Tickets</h3>
+        <div class="price">${{ event.price }}</div>
+        <div class="ticket-controls" *ngIf="!hasBooked">
+          <button (click)="decrementTickets()" [disabled]="ticketsToBuy <= 1">-</button>
+          <span>{{ ticketsToBuy }}</span>
+          <button (click)="incrementTickets()" [disabled]="true">+</button>
+        </div>
+        <div class="total-price" *ngIf="!hasBooked">
+          Total: ${{ calculatePrice(event) }}
+        </div>
+        <div class="error-message" *ngIf="maxTicketsError">
+          You can only book 1 ticket per event
+        </div>
+        <div class="error-message" *ngIf="hasBooked">
+          You have already booked this event
+        </div>
+        <button class="buy-button" (click)="buyTickets(event)" [disabled]="hasBooked || maxTicketsError">
+          {{ hasBooked ? 'Already Booked' : 'Buy Ticket' }}
+        </button>
+        <div class="ticket-progress">
+          <div class="progress-bar">
+            <div class="progress" [style.width.%]="getProgressPercentage(event)"></div>
+          </div>
+          <div class="progress-text">
+            {{ event.availableSeats }} seats remaining
+          </div>
+        </div>
+      </div>
+
+      <!-- Organizer Info -->
+      <div class="organizer-section">
+        <h3>Organized by</h3>
+        <div class="organizer">
+          <img [src]="event.organizer.image" [alt]="event.organizer.name">
+          <div class="organizer-info">
+            <h4>{{ event.organizer.name }}</h4>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              {{ event.organizer.rating }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Share Section -->
+      <div class="share-section">
+        <h3>Share Event</h3>
+        <button class="share-button" (click)="shareEvent(event)">
+          <i class="fas fa-share-alt"></i>
+          Share
+        </button>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button 
+          [class.active]="selectedTab === 'details'"
+          (click)="changeTab('details')">
+          Details
+        </button>
+        <button 
+          [class.active]="selectedTab === 'schedule'"
+          (click)="changeTab('schedule')">
+          Schedule
+        </button>
+        <button 
+          [class.active]="selectedTab === 'gallery'"
+          (click)="changeTab('gallery')">
+          Gallery
+        </button>
+        <button 
+          [class.active]="selectedTab === 'faq'"
+          (click)="changeTab('faq')">
+          FAQ
+        </button>
+        <button 
+          [class.active]="selectedTab === 'reviews'"
+          (click)="changeTab('reviews')">
+          Reviews
+        </button>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="tab-content">
+        <!-- Details Tab -->
+        <div *ngIf="selectedTab === 'details'" class="details-tab">
+          <h2>About the Event</h2>
+          <p>{{ event.description }}</p>
+          
+          <h3>Event Details</h3>
+          <ul class="event-details">
+            <li>
+              <i class="fas fa-clock"></i>
+              <span>Duration: {{ event.duration }} hours</span>
+            </li>
+            <li>
+              <i class="fas fa-ticket-alt"></i>
+              <span>Available Seats: {{ event.availableSeats }}</span>
+            </li>
+            <li>
+              <i class="fas fa-tags"></i>
+              <span>Tags: {{ event.tags.join(', ') }}</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Schedule Tab -->
+        <div *ngIf="selectedTab === 'schedule'" class="schedule-tab">
+          <h2>Event Schedule</h2>
+          <div class="schedule-list">
+            <div *ngFor="let item of event.schedule" class="schedule-item">
+              <div class="time">{{ item.time }}</div>
+              <div class="activity">
+                <h4>{{ item.activity }}</h4>
+                <p>{{ item.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery Tab -->
+        <div *ngIf="selectedTab === 'gallery'" class="gallery-tab">
+          <h2>Event Gallery</h2>
+          <div class="gallery-grid">
+            <div *ngFor="let image of event.gallery" class="gallery-item">
+              <img [src]="image" (click)="openGallery(image)" alt="Event image">
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Tab -->
+        <div *ngIf="selectedTab === 'faq'" class="faq-tab">
+          <h2>Frequently Asked Questions</h2>
+          <div class="faq-list">
+            <div *ngFor="let item of event.faq" class="faq-item">
+              <h3>{{ item.question }}</h3>
+              <p>{{ item.answer }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews Tab -->
+        <div *ngIf="selectedTab === 'reviews'" class="reviews-tab">
+          <h2>Event Reviews</h2>
+          <div class="reviews-list">
+            <div *ngFor="let review of event.reviews" class="review-item">
+              <div class="review-header">
+                <img [src]="review.user.image" [alt]="review.user.name">
+                <div class="review-info">
+                  <h4>{{ review.user.name }}</h4>
+                  <div class="rating">
+                    <i class="fas fa-star"></i>
+                    {{ review.rating }}
+                  </div>
+                </div>
+                <div class="review-date">
+                  {{ review.date | date:'mediumDate' }}
+                </div>
+              </div>
+              <p>{{ review.comment }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Modal -->
+  <div class="gallery-modal" *ngIf="showGallery" (click)="closeGallery()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-button" (click)="closeGallery()">
+        <i class="fas fa-times"></i>
+      </button>
+      <img [src]="selectedImage" alt="Selected image">
+    </div>
+  </div>
+</div> 

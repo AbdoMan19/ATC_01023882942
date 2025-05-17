@@ -1,0 +1,99 @@
+<div class="checkout-container" *ngIf="event">
+  <div class="checkout-content">
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <div class="event-details">
+        <h3>{{event.name}}</h3>
+        <div class="detail-item">
+          <i class="fas fa-calendar"></i>
+          <span>{{event.date | date:'mediumDate'}}</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>{{event.location}}</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-ticket-alt"></i>
+          <span>{{numberOfTickets}} {{numberOfTickets === 1 ? 'ticket' : 'tickets'}}</span>
+        </div>
+        <div class="detail-item">
+          <i class="fas fa-tag"></i>
+          <span>${{event.price}} per ticket</span>
+        </div>
+        <div class="total">
+          <span>Total:</span>
+          <span>${{totalAmount}}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="payment-section">
+      <h2>Payment Method</h2>
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+        <div class="payment-methods">
+          <div *ngFor="let method of paymentMethods" class="payment-method">
+            <input type="radio" [id]="method.id" formControlName="paymentMethod" [value]="method.id">
+            <label [for]="method.id">
+              <i [class]="method.icon"></i>
+              {{method.name}}
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" *ngIf="paymentForm.get('paymentMethod')?.value === 'card'">
+          <label for="cardNumber">Card Number</label>
+          <input type="text" id="cardNumber" formControlName="cardNumber" placeholder="1234 5678 9012 3456">
+          <div class="error" *ngIf="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched">
+            Please enter a valid 16-digit card number
+          </div>
+        </div>
+
+        <div class="form-row" *ngIf="paymentForm.get('paymentMethod')?.value === 'card'">
+          <div class="form-group">
+            <label for="expiry">Expiry Date</label>
+            <input type="text" id="expiry" formControlName="expiry" placeholder="MM/YY">
+            <div class="error" *ngIf="paymentForm.get('expiry')?.invalid && paymentForm.get('expiry')?.touched">
+              Please enter a valid expiry date (MM/YY)
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" formControlName="cvv" placeholder="123">
+            <div class="error" *ngIf="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched">
+              Please enter a valid CVV
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email for Confirmation</label>
+          <input type="email" id="email" formControlName="email" placeholder="your@email.com">
+          <div class="error" *ngIf="paymentForm.get('email')?.invalid && paymentForm.get('email')?.touched">
+            Please enter a valid email address
+          </div>
+        </div>
+
+        <div class="payment-button">
+          <button type="submit" [disabled]="!paymentForm.valid || loading">
+            <ng-container [ngSwitch]="paymentForm.get('paymentMethod')?.value">
+              <ng-container *ngSwitchCase="'card'">
+                {{ loading ? 'Processing...' : 'Pay with Card' }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'paypal'">
+                <i class="fab fa-paypal"></i> {{ loading ? 'Processing...' : 'Pay with PayPal' }}
+              </ng-container>
+              <ng-container *ngSwitchCase="'apple'">
+                <i class="fab fa-apple-pay"></i> {{ loading ? 'Processing...' : 'Pay with Apple Pay' }}
+              </ng-container>
+            </ng-container>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="error-message" *ngIf="error">
+  {{ error }}
+</div> 

@@ -1,0 +1,81 @@
+<div class="confirmation-container" *ngIf="booking">
+  <div class="confirmation-card">
+    <div class="congrats-message">
+      <div class="congrats-text">🎉 Congratulations! 🎉</div>
+      <div class="sub-text">Your booking has been successfully confirmed</div>
+    </div>
+    <div class="success-icon">
+      <i class="fas fa-check-circle"></i>
+    </div>
+    <h1>Booking Confirmed!</h1>
+    <p class="confirmation-message">Thank you for your purchase. Your tickets have been sent to your email.</p>
+    
+    <div class="booking-details">
+      <h2>Booking Details</h2>
+      <div class="detail-row">
+        <span>Event:</span>
+        <span>{{ booking.eventName }}</span>
+      </div>
+      <div class="detail-row">
+        <span>Date:</span>
+        <span>{{ booking.eventDate | date:'mediumDate' }}</span>
+      </div>
+      <div class="detail-row">
+        <span>Location:</span>
+        <span>{{ booking.eventLocation }}</span>
+      </div>
+      <div class="detail-row">
+        <span>Tickets:</span>
+        <span>{{ booking.numberOfTickets }} x ${{ booking.totalPrice / booking.numberOfTickets }} each</span>
+      </div>
+      <div class="detail-row total">
+        <span>Total Paid:</span>
+        <span>${{ booking.totalPrice }}</span>
+      </div>
+    </div>
+
+    <div class="ticket-info">
+      <h3>Your Tickets</h3>
+      <p>Your tickets have been sent to your email address. You can also view them in your account.</p>
+      <div class="ticket-actions">
+        <button class="view-tickets" (click)="viewBookings()">
+          <i class="fas fa-ticket-alt"></i>
+          View Tickets
+        </button>
+        <button class="download-tickets" (click)="viewBookings()">
+          <i class="fas fa-download"></i>
+          Download Tickets
+        </button>
+      </div>
+    </div>
+
+    <div class="next-steps">
+      <h3>What's Next?</h3>
+      <ul>
+        <li>
+          <i class="fas fa-envelope"></i>
+          Check your email for the tickets
+        </li>
+        <li>
+          <i class="fas fa-calendar-alt"></i>
+          Add the event to your calendar
+        </li>
+        <li>
+          <i class="fas fa-share-alt"></i>
+          Share the event with friends
+        </li>
+      </ul>
+    </div>
+
+    <div class="action-buttons">
+      <button class="back-to-events" (click)="browseEvents()">
+        <i class="fas fa-arrow-left"></i>
+        Back to Events
+      </button>
+      <button class="view-booking" (click)="viewBookings()">
+        <i class="fas fa-list"></i>
+        View All Bookings
+      </button>
+    </div>
+  </div>
+</div> 

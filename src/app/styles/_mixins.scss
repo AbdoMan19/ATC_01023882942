@@ -1,0 +1,179 @@
+@use 'sass:map';
+@use './variables' as *;
+
+// Layout Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin grid-auto-fit($min-width: 250px, $gap: map.get($spacing, 'md')) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: $gap;
+}
+
+// Typography Mixins
+@mixin text-style($size: 'base', $weight: 'normal', $line-height: 'normal') {
+  font-size: map.get($font-sizes, $size);
+  font-weight: map.get($font-weights, $weight);
+  line-height: map.get($line-heights, $line-height);
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin multi-line-truncate($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+// Animation Mixins
+@mixin fade-in($duration: map.get($transitions, 'base')) {
+  animation: fadeIn $duration ease-in-out;
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@mixin slide-in($direction: 'right', $duration: map.get($transitions, 'base')) {
+  animation: slideIn $duration ease-in-out;
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(if($direction == 'right', 100%, -100%));
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+}
+
+// Responsive Mixins
+@mixin respond-to($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: #{$breakpoint}";
+  }
+}
+
+@mixin mobile-first {
+  @media (max-width: #{map.get($breakpoints, 'sm') - 1px}) {
+    @content;
+  }
+}
+
+// Accessibility Mixins
+@mixin focus-ring {
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+}
+
+@mixin sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Component Mixins
+@mixin card-hover {
+  transition: transform map.get($transitions, 'base'),
+              box-shadow map.get($transitions, 'base');
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: map.get($shadows, 'lg');
+  }
+}
+
+@mixin button-hover {
+  transition: transform map.get($transitions, 'base');
+  
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+@mixin input-focus {
+  &:focus {
+    outline: none;
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+  }
+}
+
+// Utility Mixins
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--background-tertiary);
+    border-radius: map.get($border-radius, 'full');
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--neutral-400);
+    border-radius: map.get($border-radius, 'full');
+    
+    &:hover {
+      background: var(--neutral-500);
+    }
+  }
+}
+
+@mixin glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@mixin gradient-text($gradient) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+} 

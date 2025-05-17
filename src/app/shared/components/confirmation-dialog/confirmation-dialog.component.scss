@@ -1,0 +1,109 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/themes' as *;
+@use '../../../styles/mixins' as *;
+
+.dialog-container {
+  padding: 1.5rem;
+  min-width: 300px;
+  max-width: 400px;
+
+  &.warning {
+    .dialog-header i {
+      color: var(--warning);
+    }
+
+    .dialog-button.confirm {
+      background-color: var(--warning);
+      &:hover {
+        background-color: var(--warning-hover);
+      }
+    }
+  }
+
+  &.danger {
+    .dialog-header i {
+      color: var(--error);
+    }
+
+    .dialog-button.confirm {
+      background-color: var(--error);
+      &:hover {
+        background-color: var(--error-hover);
+      }
+    }
+  }
+
+  &.info {
+    .dialog-header i {
+      color: var(--info);
+    }
+
+    .dialog-button.confirm {
+      background-color: var(--info);
+      &:hover {
+        background-color: var(--info-hover);
+      }
+    }
+  }
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+
+  i {
+    font-size: 1.5rem;
+  }
+
+  .dialog-title {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+  }
+}
+
+.dialog-content {
+  margin-bottom: 1.5rem;
+
+  .dialog-message {
+    margin: 0;
+    color: var(--text-tertiary);
+    line-height: 1.5;
+  }
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.dialog-button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  @include theme-transition;
+
+  &.cancel {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-tertiary);
+
+    &:hover {
+      background-color: var(--background-tertiary);
+    }
+  }
+
+  &.confirm {
+    border: none;
+    color: var(--text-light);
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+} 
