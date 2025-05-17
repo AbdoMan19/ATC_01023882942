@@ -1,4 +1,12 @@
 {
+  "name": "event-booking-app",  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build --configuration production",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "vercel-build": "npm run build"
+  },
   "dependencies": {
     "@angular/animations": "^19.2.10",
     "@angular/common": "^19.2.10",
@@ -7,9 +15,9 @@
     "@angular/platform-browser": "^19.2.10",
     "@angular/platform-browser-dynamic": "^19.2.10",
     "@angular/router": "^19.2.10"
-  },
-  "devDependencies": {
+  },  "devDependencies": {
     "@angular-devkit/build-angular": "^19.2.11",
+    "@angular/cli": "^19.2.11",
     "stylelint": "^16.19.1",
     "stylelint-config-standard-scss": "^15.0.0",
     "stylelint-scss": "^6.12.0"

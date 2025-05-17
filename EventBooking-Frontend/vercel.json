@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "builds": [{ 
+    "src": "package.json", 
+    "use": "@vercel/static-build",
+    "config": { 
+      "distDir": "dist/event-booking-app" 
+    }
+  }],
+  "routes": [
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+    { "src": "/(.*)\\.(js|css|ico|json|jpg|jpeg|png|svg|webp)", "dest": "/$1.$2" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
