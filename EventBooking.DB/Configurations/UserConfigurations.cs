@@ -15,7 +15,8 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasMaxLength(100);
 
-
+        builder.Property(u => u.ImageUrl)
+            .IsRequired(false);
         
         builder.Property(u => u.Email)
             .IsRequired();

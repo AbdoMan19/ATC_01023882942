@@ -26,7 +26,7 @@ public class Event
     public User Organizer { get; set; }
     public virtual ICollection<EventCategory> EventCategories { get; set; } = [];
     public virtual ICollection<Booking> Bookings { get; set; } = [];
-    public virtual ICollection<string> Gallery { get; set; } = [];
+    public ICollection<string> Gallery { get; set; } = [];
     public virtual ICollection<Review> Reviews { get; set; } = [];
     public virtual ICollection<Faq> Faqs { get; set; } = [];
     public virtual ICollection<Schedule> Schedules { get; set; } = [];

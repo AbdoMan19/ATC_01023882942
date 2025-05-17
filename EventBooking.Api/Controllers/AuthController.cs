@@ -48,28 +48,17 @@ public class AuthController : ControllerBase
         
     }
 
-    /*[Authorize]
+    [Authorize("User")]
     [HttpPost("change-password")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequestDto request)
     {
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        if (string.IsNullOrEmpty(userId))
-            return Unauthorized();
 
-        var result = await _authService.ChangePasswordAsync(Guid.Parse(userId), request);
-        
-        if (!result.Success)
-            return BadRequest(new ProblemDetails
-            {
-                Title = "Password change failed",
-                Detail = result.Message,
-                Status = StatusCodes.Status400BadRequest
-            });
+        var result = await _authService.ChangePasswordAsync(request);
+        return result.ErrorList.Count != 0 ? BadRequest(result) : Ok(result);
 
-        return Ok();
-    }*/
+    }
 
     [Authorize("User")]
     [HttpPost("logout")]

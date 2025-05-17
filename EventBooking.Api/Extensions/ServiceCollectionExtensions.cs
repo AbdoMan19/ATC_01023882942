@@ -23,10 +23,25 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.Configure<ApiBehaviorOptions>(options =>
+        services.AddControllers()
+            .ConfigureApiBehaviorOptions(options => options.InvalidModelStateResponseFactory = context => ValidationResult(context))
+            .AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+                o.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                //enums
+                o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+            });
+        
+        
+        services.AddFluentValidationAutoValidation(config =>
         {
-            options.SuppressModelStateInvalidFilter = true;
+            config.DisableDataAnnotationsValidation = true;
         });
+        services.AddFluentValidationClientsideAdapters();
+        services.AddValidatorsFromAssembly(EventBooking.Service.AssemblyReference.Assembly, includeInternalTypes: true);
+        
 
         services.Scan(selector => selector
             .FromAssemblies(
@@ -51,9 +66,6 @@ public static class ServiceCollectionExtensions
         });
         
         
-        services.AddFluentValidationAutoValidation();
-        services.AddFluentValidationClientsideAdapters();
-        services.AddValidatorsFromAssembly(EventBooking.Service.AssemblyReference.Assembly, includeInternalTypes: true);
 
         services.AddIdentity<User, IdentityRole<Guid>>(options =>
             {
@@ -98,6 +110,21 @@ public static class ServiceCollectionExtensions
         services.AddProblemDetails();
 
         return services;
+    }
+    static BadRequestObjectResult ValidationResult(ActionContext context)
+    {
+        var errorList = context.ModelState
+            .Where(state => state.Value.ValidationState == ModelValidationState.Invalid)
+            .SelectMany(
+                state => state.Value.Errors,
+                (state, error) => new ErrorResponseModel
+                {
+                    PropertyName = state.Key,
+                    Message = error.ErrorMessage,
+                })
+            .ToList();
+
+        return new BadRequestObjectResult(GenericResponseModel<bool>.Failure("Validation Error", errorList));
     }
    
 

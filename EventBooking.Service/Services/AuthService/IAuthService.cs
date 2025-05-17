@@ -10,5 +10,6 @@ public interface IAuthService
     Task<GenericResponseModel<AuthResponseDto>> RegisterAsync(RegisterRequestDto request);
     Task<GenericResponseModel<TokenResponseDto>> RefreshTokenAsync(RefreshTokenRequest request);
     Task<GenericResponseModel<bool>> LogoutAsync();
+    Task<GenericResponseModel<bool>> ChangePasswordAsync(ChangePasswordRequestDto request);
 
 }

@@ -8,39 +8,33 @@ public class UserDeviceConfigurations : IEntityTypeConfiguration<UserDevice>
 {
     public void Configure(EntityTypeBuilder<UserDevice> builder)
     {
-        // Primary Key
-        builder.HasKey(u => u.Id);
-        
-        // Properties
-        builder.Property(u => u.DeviceName)
+        builder.HasKey(ud => ud.Id);
+
+        builder.Property(ud => ud.DeviceId)
             .IsRequired()
-            .HasMaxLength(50);
-            
-        builder.Property(u => u.DeviceId)
+            .HasMaxLength(255); // Increase max length
+
+        builder.Property(ud => ud.DeviceName)
             .IsRequired()
-            .HasMaxLength(50);
-            
-        builder.Property(u => u.Platform)
+            .HasMaxLength(255); // Increase max length
+
+        builder.Property(ud => ud.DeviceType)
             .IsRequired()
-            .HasMaxLength(50);
-        
-        builder.Property(u => u.DeviceType)
+            .HasMaxLength(100); // Increase max length
+
+        builder.Property(ud => ud.Platform)
             .IsRequired()
-            .HasMaxLength(50);
-            
-        // Indexes
-        builder.HasIndex(u => new { u.DeviceName, u.DeviceId })
-            .IsUnique();
-        
-        // Relationships
-        builder.HasOne(u => u.User)
+            .HasMaxLength(100); // Increase max length
+
+
+        // Relationship with User
+        builder.HasOne(ud => ud.User)
             .WithMany(u => u.UserDevices)
-            .HasForeignKey(u => u.UserId)
-            .OnDelete(DeleteBehavior.Restrict);
-        
-        builder.HasOne(u => u.RefreshToken)
-            .WithOne(u => u.UserDevice)
-            .HasForeignKey<RefreshToken>(u => u.UserDeviceId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey(ud => ud.UserId);
+
+        // Relationship with RefreshToken (one-to-one)
+        builder.HasOne(ud => ud.RefreshToken)
+            .WithOne(rt => rt.UserDevice)
+            .HasForeignKey<RefreshToken>(rt => rt.UserDeviceId);
     }
 }

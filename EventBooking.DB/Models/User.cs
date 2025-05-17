@@ -6,7 +6,7 @@ public class User : IdentityUser<Guid>
 {  
     public string Name { get; set; }
     public string? PhoneNumber { get; set; }
-
+    public string? ImageUrl { get; set; }
 
     //create at
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
